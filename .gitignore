@@ -1,0 +1,36 @@
+# Gradle
+.gradle/
+build/
+.kotlin/
+
+# Stonecutter version nodes are generated
+versions/
+
+# Loom caches stored inside version nodes
+versions/*/.gradle/
+
+# Minecraft run directory
+run/
+
+# IDE
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+.classpath
+.project
+.settings/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Java
+*.class
+out/
+bin/
+
+# Misc
+local.properties
+*.log
