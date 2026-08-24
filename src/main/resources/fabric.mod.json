@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "id": "${id}",
+  "version": "${version}",
+  "name": "${name}",
+  "description": "Makes item frames more useful by shrinking hitboxes and making them invisible.",
+  "authors": [
+    "Kryp Arnold"
+  ],
+  "contact": {
+    "homepage": "https://modrinth.com/mod/itemframesplus",
+    "sources": "https://github.com/Kryp/itemframesplus",
+    "issues": "https://github.com/Kryp/itemframesplus/issues"
+  },
+  "license": "MIT",
+  "icon": "assets/itemframesplus/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.kryp.itemframesplus.ItemFramesPlusFabric"
+    ],
+    "client": [
+      "com.kryp.itemframesplus.ItemFramesPlusClient"
+    ]
+  },
+  "mixins": [
+    "itemframesplus.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.14",
+    "fabric-api-base": "*",
+    "${command_api}": "*",
+    "fabric-networking-api-v1": "*",
+    "fabric-resource-loader-v0": "*",
+    "minecraft": "${minecraft}",
+    "java": ">=8"
+  }
+}

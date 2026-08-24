@@ -1,0 +1,5 @@
+{
+  "command.itemframesplus.invisibleItemFrames.alreadySet": "invisibleItemFrames is already set to: %s",
+  "command.itemframesplus.invisibleItemFrames.nowSetTo": "invisibleItemFrames is now set to: %s",
+  "util.itemframesplus.cantChangeVisibility": "You can't change the visibility of item frames since you have invisibleItemFrames set to: false"
+}
