@@ -70,11 +70,11 @@ tasks {
             register("version", "mod.version")
             register("minecraft", "mod.mc_compat")
             register("command_api", "deps.fabric_command_api")
+            register("pack_format", "pack_format")
         }
 
         filesMatching("fabric.mod.json") { expand(props) }
-
-        exclude("META-INF/neoforge.mods.toml", "META-INF/mods.toml")
+        filesMatching("pack.mcmeta") { expand(props) }
     }
 
     register<Copy>("buildAndCollect") {

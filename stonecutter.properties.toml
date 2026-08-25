@@ -13,6 +13,7 @@ loomx.loom_version = "1.17-SNAPSHOT"
 mod.mc_compat = ">=1.16.5"
 deps.fabric_api = "0.42.0+1.16"
 deps.fabric_command_api = "fabric-command-api-v1"
+pack_format = 6
 
 ["1.19"]
 
@@ -20,6 +21,7 @@ deps.fabric_command_api = "fabric-command-api-v1"
 mod.mc_compat = ">=1.19"
 deps.fabric_api = "0.58.0+1.19"
 deps.fabric_command_api = "fabric-command-api-v2"
+pack_format = 9
 
 ["1.20.5"]
 
@@ -27,6 +29,7 @@ deps.fabric_command_api = "fabric-command-api-v2"
 mod.mc_compat = ">=1.20.5"
 deps.fabric_api = "0.97.8+1.20.5"
 deps.fabric_command_api = "fabric-command-api-v2"
+pack_format = 32
 
 ["1.21"]
 
@@ -34,6 +37,7 @@ deps.fabric_command_api = "fabric-command-api-v2"
 mod.mc_compat = ">=1.21 <1.21.4"
 deps.fabric_api = "0.100.8+1.21"
 deps.fabric_command_api = "fabric-command-api-v2"
+pack_format = 34
 
 ["1.21.4"]
 
@@ -41,6 +45,7 @@ deps.fabric_command_api = "fabric-command-api-v2"
 mod.mc_compat = ">=1.21.4 <1.21.9"
 deps.fabric_api = "0.110.5+1.21.4"
 deps.fabric_command_api = "fabric-command-api-v2"
+pack_format = 46
 
 ["1.21.9"]
 
@@ -48,6 +53,7 @@ deps.fabric_command_api = "fabric-command-api-v2"
 mod.mc_compat = ">=1.21.9 <26.1"
 deps.fabric_api = "0.141.6+1.21.11"
 deps.fabric_command_api = "fabric-command-api-v2"
+pack_format = 69
 
 ["26.1"]
 
@@ -55,6 +61,7 @@ deps.fabric_command_api = "fabric-command-api-v2"
 mod.mc_compat = ">=26.1 <26.2"
 deps.fabric_api = "0.145.1+26.1"
 deps.fabric_command_api = "fabric-command-api-v2"
+pack_format = 84
 
 ["26.2"]
 
@@ -62,3 +69,4 @@ deps.fabric_command_api = "fabric-command-api-v2"
 mod.mc_compat = ">=26.2"
 deps.fabric_api = "0.156.0+26.2"
 deps.fabric_command_api = "fabric-command-api-v2"
+pack_format = 88

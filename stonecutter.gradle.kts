@@ -15,7 +15,7 @@ stonecutter parameters {
 
     // Adds constants to Stonecutter comments (i.e. for `//? if fabric {...`)
     constants {
-        match(loader, "fabric", /*"neoforge", "forge"*/)
+        match(loader, "fabric")
     }
 }
 
