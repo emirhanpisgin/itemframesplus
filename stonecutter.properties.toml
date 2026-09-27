@@ -85,6 +85,46 @@ deps.forge_loader = "45.4.5"
 deps.forge_fml = "45"
 pack_format = 13
 
+["1.20"]
+
+[forge."1.20"]
+mod.mc_compat = "=1.20"
+deps.forge_loader = "46.0.14"
+deps.forge_fml = "46"
+pack_format = 15
+
+["1.20.1"]
+
+[forge."1.20.1"]
+mod.mc_compat = "=1.20.1"
+deps.forge_loader = "47.3.0"
+deps.forge_fml = "47"
+pack_format = 15
+
+["1.20.2"]
+
+[forge."1.20.2"]
+mod.mc_compat = "=1.20.2"
+deps.forge_loader = "48.1.0"
+deps.forge_fml = "48"
+pack_format = 18
+
+["1.20.3"]
+
+[forge."1.20.3"]
+mod.mc_compat = "=1.20.3"
+deps.forge_loader = "49.0.2"
+deps.forge_fml = "49"
+pack_format = 22
+
+["1.20.4"]
+
+[forge."1.20.4"]
+mod.mc_compat = "=1.20.4"
+deps.forge_loader = "49.2.8"
+deps.forge_fml = "49"
+pack_format = 22
+
 ["1.20.5"]
 
 [fabric."1.20.5"]
