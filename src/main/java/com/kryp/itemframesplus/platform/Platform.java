@@ -11,10 +11,18 @@ import net.fabricmc.loader.api.FabricLoader;
 //? if forge {
 /*import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.fml.loading.FMLPaths;
-import net.minecraftforge.network.NetworkDirection;
+*///?}
+//? if forge && <1.20.2 {
+/*import net.minecraftforge.network.NetworkDirection;
 import net.minecraftforge.network.NetworkEvent;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.simple.SimpleChannel;
+*///?}
+//? if forge && >=1.20.2 {
+/*import net.minecraftforge.network.ChannelBuilder;
+import net.minecraftforge.network.NetworkDirection;
+import net.minecraftforge.network.PacketDistributor;
+import net.minecraftforge.network.SimpleChannel;
 *///?}
 //? if fabric {
 //? if >=1.20.5 {
@@ -32,13 +40,23 @@ public class Platform {
 
     //? if forge {
     /*private static final String PROTOCOL_VERSION = "1";
-    private static final SimpleChannel CHANNEL = NetworkRegistry.ChannelBuilder
+    private static boolean channelRegistered = false;
+    *///?}
+    //? if forge && <1.20.2 {
+    /*private static final SimpleChannel CHANNEL = NetworkRegistry.ChannelBuilder
         .named(new ResourceLocation(ItemFramesPlus.MOD_ID, "main"))
         .clientAcceptedVersions(version -> true)
         .serverAcceptedVersions(version -> true)
         .networkProtocolVersion(() -> PROTOCOL_VERSION)
         .simpleChannel();
-    private static boolean channelRegistered = false;
+    *///?}
+    //? if forge && >=1.20.2 {
+    /*private static final SimpleChannel CHANNEL = ChannelBuilder
+        .named(new ResourceLocation(ItemFramesPlus.MOD_ID, "main"))
+        .clientAcceptedVersions((status, version) -> true)
+        .serverAcceptedVersions((status, version) -> true)
+        .networkProtocolVersion(Integer.parseInt(PROTOCOL_VERSION))
+        .simpleChannel();
     *///?}
 
     public void sendPreferenceToServer(Boolean value) {
@@ -58,8 +76,15 @@ public class Platform {
         //?}
         //? if forge {
         /*if (net.minecraft.client.Minecraft.getInstance().getConnection() != null) {
-            CHANNEL.sendToServer(new InvisibleItemFramesPacket(value));
-        }
+        *///?}
+        //? if forge && <1.20.2 {
+        /*            CHANNEL.sendToServer(new InvisibleItemFramesPacket(value));
+        *///?}
+        //? if forge && >=1.20.2 {
+        /*            CHANNEL.send(new InvisibleItemFramesPacket(value), PacketDistributor.SERVER.noArg());
+        *///?}
+        //? if forge {
+        /*        }
         *///?}
     }
 
@@ -98,14 +123,32 @@ public class Platform {
         );
         *///?}
         //?}
-        //? if forge {
+        //? if forge && <1.20.2 {
+        /*if (!channelRegistered) {
+            channelRegistered = true;
+            CHANNEL.registerMessage(0, InvisibleItemFramesPacket.class,
+                InvisibleItemFramesPacket::encode,
+                InvisibleItemFramesPacket::decode,
+                (message, contextSupplier) -> {
+                    NetworkEvent.Context context = contextSupplier.get();
+                    context.enqueueWork(() -> {
+                        net.minecraft.server.level.ServerPlayer player = context.getSender();
+                        if (player != null) {
+                            ItemFramesPlusPlayerPreferences.addPlayer(player.getUUID(), message.value());
+                        }
+                    });
+                    context.setPacketHandled(true);
+                },
+                java.util.Optional.of(NetworkDirection.PLAY_TO_SERVER));
+        }
+        *///?}
+        //? if forge && >=1.20.2 {
         /*if (!channelRegistered) {
             channelRegistered = true;
             CHANNEL.messageBuilder(InvisibleItemFramesPacket.class, 0, NetworkDirection.PLAY_TO_SERVER)
                 .encoder(InvisibleItemFramesPacket::encode)
                 .decoder(InvisibleItemFramesPacket::decode)
-                .consumer((message, contextSupplier) -> {
-                    NetworkEvent.Context context = contextSupplier.get();
+                .consumerMainThread((message, context) -> {
                     context.enqueueWork(() -> {
                         net.minecraft.server.level.ServerPlayer player = context.getSender();
                         if (player != null) {

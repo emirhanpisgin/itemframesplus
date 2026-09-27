@@ -31,8 +31,30 @@ public class ItemFramesPlusForgeClient {
         }
     }
 
-    //? if >=1.19.4 {
-    @SubscribeEvent
+*///?}
+//? if forge && >=1.20 {
+/*    @SubscribeEvent
+    public static void onRegisterClientCommands(RegisterClientCommandsEvent event) {
+        CommandDispatcher<CommandSourceStack> dispatcher = event.getDispatcher();
+        dispatcher.register(Commands.literal("itemframesplus")
+            .then(Commands.literal("invisibleItemFrames")
+                .then(Commands.argument("boolean", BoolArgumentType.bool())
+                    .executes(context -> {
+                        Boolean currentValue = ItemFramesPlusConfig.getOptions().getInvisibleItemFrames();
+                        Boolean requestedValue = BoolArgumentType.getBool(context, "boolean");
+                        if (java.util.Objects.equals(currentValue, requestedValue)) {
+                            context.getSource().sendSuccess(() -> Component.translatable("command.itemframesplus.invisibleItemFrames.alreadySet", currentValue), false);
+                            return -1;
+                        } else {
+                            ItemFramesPlusConfig.getOptions().setInvisibleItemFrames(requestedValue);
+                            context.getSource().sendSuccess(() -> Component.translatable("command.itemframesplus.invisibleItemFrames.nowSetTo", requestedValue), false);
+                            return 1;
+                        }
+                    }))));
+    }
+*///?}
+//? if forge && >=1.19.4 && <1.20 {
+/*    @SubscribeEvent
     public static void onRegisterClientCommands(RegisterClientCommandsEvent event) {
         CommandDispatcher<CommandSourceStack> dispatcher = event.getDispatcher();
         dispatcher.register(Commands.literal("itemframesplus")
@@ -51,6 +73,7 @@ public class ItemFramesPlusForgeClient {
                         }
                     }))));
     }
-    //?}
-}
+*///?}
+//? if forge {
+/*}
 *///?}

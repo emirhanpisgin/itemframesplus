@@ -35,3 +35,6 @@ bin/
 # Misc
 local.properties
 *.log
+
+# Session handoff note (delete after reading)
+HANDOFF.md
