@@ -15,10 +15,12 @@ public class ItemFramesPlusClientRegistries {
     }
 
     private static void registerCommands() {
+        //? if fabric {
         //? if >=1.19 {
         ClientCommandRegistrationCallback.EVENT.register(InvisibleItemFramesCommand::register);
         //?} else if fabric {
         /*InvisibleItemFramesCommand.register(ClientCommandManager.DISPATCHER);
         *///?}
+        //?}
     }
 }

@@ -20,8 +20,8 @@ public class ItemFramesPlusForge {
 
     @SubscribeEvent
     public void onPlayerLoggedOut(PlayerEvent.PlayerLoggedOutEvent event) {
-        if (event.getPlayer() != null) {
-            ItemFramesPlusPlayerPreferences.removePlayer(event.getPlayer().getUUID());
+        if (event.getEntity() != null) {
+            ItemFramesPlusPlayerPreferences.removePlayer(event.getEntity().getUUID());
         }
     }
 }
