@@ -110,6 +110,16 @@ java {
     withSourcesJar()
 }
 
+// Forge 1.20.4+ FML discovers dev-run mods per classpath entry and expects each mod
+// file (directory) to contain BOTH classes and resources (the old MOD_CLASSES
+// mechanism was removed). The 1.20.4+ MDK solves this by merging the resources
+// output into the classes output directory.
+if (sc.current.parsed >= "1.20.4") {
+    sourceSets.named("main") {
+        output.setResourcesDir(output.classesDirs.singleFile)
+    }
+}
+
 // Production mixin registration: Forge registers mixin configs from the
 // MixinConfigs attribute of the mod jar's manifest.
 tasks.named<Jar>("jar") {
