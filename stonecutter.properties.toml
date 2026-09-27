@@ -23,6 +23,14 @@ deps.forge_loader = "38.0.17"
 deps.forge_fml = "38"
 pack_format = 8
 
+["1.18.1"]
+
+[forge."1.18.1"]
+mod.mc_compat = "=1.18.1"
+deps.forge_loader = "39.1.2"
+deps.forge_fml = "39"
+pack_format = 8
+
 ["1.19"]
 
 [fabric."1.19"]
