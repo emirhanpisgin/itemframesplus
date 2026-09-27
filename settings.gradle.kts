@@ -5,6 +5,7 @@ pluginManagement {
         maven("https://maven.fabricmc.net/") { name = "FabricMC" }
         maven("https://maven.kikugie.dev/releases") { name = "KikuGie Releases" }
         maven("https://maven.kikugie.dev/snapshots") { name = "KikuGie Snapshots" }
+        maven("https://maven.minecraftforge.net/") { name = "MinecraftForge" }
     }
 }
 
@@ -48,6 +49,8 @@ stonecutter {
         match("1.21.9", "fabric", version = "1.21.11")
         match("26.1", "fabric")
         match("26.2", "fabric")
+
+        match("1.18", "forge")
 
         vcsVersion = "1.16.5-fabric"
     }

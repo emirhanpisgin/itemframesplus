@@ -3,10 +3,11 @@
 build/
 .kotlin/
 
-# Stonecutter version nodes are generated
-versions/
-
-# Loom caches stored inside version nodes
+# Stonecutter version nodes are generated, but per-node source overrides
+# (versions/<node>/src/**) are hand-written and committed.
+versions/*
+!versions/*/
+versions/*/build/
 versions/*/.gradle/
 
 # Minecraft run directory

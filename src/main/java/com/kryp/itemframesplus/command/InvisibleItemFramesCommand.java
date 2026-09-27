@@ -1,5 +1,6 @@
 package com.kryp.itemframesplus.command;
 
+//? if fabric {
 import com.kryp.itemframesplus.ItemFramesPlusConfig;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.BoolArgumentType;
@@ -10,7 +11,9 @@ import net.minecraft.network.chat.Component;
 //?} else {
 /*import net.minecraft.network.chat.TranslatableComponent;
 *///?}
+//?}
 
+//? if fabric {
 //? if >=26.1 {
 /*import net.fabricmc.fabric.api.client.command.v2.ClientCommands;
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
@@ -23,7 +26,9 @@ import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import net.fabricmc.fabric.api.client.command.v1.FabricClientCommandSource;
 *///?}
 //?}
+//?}
 
+//? if fabric {
 public class InvisibleItemFramesCommand {
     public static int run(CommandContext<FabricClientCommandSource> context) {
         Boolean currentValue = ItemFramesPlusConfig.getOptions().getInvisibleItemFrames();
@@ -72,3 +77,4 @@ public class InvisibleItemFramesCommand {
         );
     }
 }
+//?}

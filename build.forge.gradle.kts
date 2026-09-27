@@ -16,7 +16,7 @@ base.archivesName = "${property("mod.id") as String}-forge"
 // Declared per-node as `session_jdk` in stonecutter.properties.toml; enforced here
 // so misconfigured sessions fail fast with instructions instead of cryptic ASM
 // errors deep inside a game launch.
-val expectedJdk = sc.properties["session_jdk"]
+val expectedJdk: String? = try { sc.properties["session_jdk"] } catch (_: Exception) { null }
 if (expectedJdk != null) {
     val current = JavaVersion.current().majorVersion.toInt()
     val required = (expectedJdk as String).toInt()
@@ -35,13 +35,19 @@ val requiredJava: JavaVersion = when {
     else -> JavaVersion.VERSION_1_8
 }
 
-// Forge < 1.17 bundles LWJGL 3.2.2 whose package sealing breaks on JDK 17+.
-// Resolve a JDK 8 launcher at configuration time for those versions.
-val jdk8Launcher = if (sc.current.parsed < "1.17") {
-    javaToolchains.launcherFor {
-        languageVersion.set(JavaLanguageVersion.of(8))
-    }
-} else null
+// The game must launch on a JDK its Forge/ModLauncher version supports:
+// <1.17 needs Java 8 (LWJGL 3.2.2 package sealing breaks on newer JDKs),
+// 1.18-1.20.4 needs Java 17, 1.20.5-1.21.x needs Java 21, 26.x needs 25.
+// Until this launcher existed, runs used the Gradle daemon's JVM.
+val runJavaVersion: JavaLanguageVersion = when {
+    sc.current.parsed < "1.17" -> JavaLanguageVersion.of(8)
+    sc.current.parsed < "1.20.5" -> JavaLanguageVersion.of(17)
+    sc.current.parsed < "26.1" -> JavaLanguageVersion.of(21)
+    else -> JavaLanguageVersion.of(25)
+}
+val runLauncher = javaToolchains.launcherFor {
+    languageVersion.set(runJavaVersion)
+}
 
 minecraft {
     mappings("official", sc.current.version)
@@ -49,6 +55,13 @@ minecraft {
     runs {
         configureEach {
             workingDir.convention(rootProject.layout.projectDirectory.dir("run"))
+            // Forge does not read [[mixins]] from mods.toml; mixin configs are
+            // registered via the MixinConfigs manifest attribute (production)
+            // and the --mixin.config argument (dev runs).
+            args("--mixin.config=itemframesplus.mixins.json")
+            // The Slime launcher reflectively invokes BootstrapLauncher.main;
+            // JDK 17+ module access requires this opening.
+            jvmArgs("--add-opens", "java.base/java.lang.invoke=ALL-UNNAMED")
             // Forge < 1.17 ships LWJGL 3.2.2 with internal class hierarchy changes that fail
             // bytecode verification. JDK 8 supports -noverify natively.
             if (sc.current.parsed < "1.17") jvmArgs("-noverify")
@@ -97,17 +110,23 @@ java {
     withSourcesJar()
 }
 
+// Production mixin registration: Forge registers mixin configs from the
+// MixinConfigs attribute of the mod jar's manifest.
+tasks.named<Jar>("jar") {
+    manifest {
+        attributes("MixinConfigs" to "itemframesplus.mixins.json")
+    }
+}
+
 // Compile with the current JDK but target the Java version each Minecraft version requires.
 tasks.withType<JavaCompile>().configureEach {
     options.release.set(requiredJava.majorVersion.toInt())
 }
 
-// Run tasks on the resolved JDK: <1.17 must launch under Java 8.
-if (jdk8Launcher != null) {
-    tasks.withType<JavaExec>().configureEach {
-        if (name == "runClient" || name == "runServer") {
-            javaLauncher.set(jdk8Launcher)
-        }
+// Run tasks on the era-appropriate JDK resolved above.
+tasks.withType<JavaExec>().configureEach {
+    if (name == "runClient" || name == "runServer") {
+        javaLauncher.set(runLauncher)
     }
 }
 

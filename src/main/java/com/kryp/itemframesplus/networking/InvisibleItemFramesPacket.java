@@ -11,7 +11,9 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
-//?}
+//?} else {
+/*import net.minecraft.network.FriendlyByteBuf;
+*///?}
 
 //? if >=26.1 {
 /*import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -120,5 +122,23 @@ public class InvisibleItemFramesPacket implements CustomPacketPayload {
 /*public class InvisibleItemFramesPacket {
     public static final ResourceLocation PACKET_ID =
         new ResourceLocation(ItemFramesPlus.MOD_ID, "invisible-item-frames");
+
+    private final boolean value;
+
+    public InvisibleItemFramesPacket(boolean value) {
+        this.value = value;
+    }
+
+    public static InvisibleItemFramesPacket decode(FriendlyByteBuf buf) {
+        return new InvisibleItemFramesPacket(buf.readBoolean());
+    }
+
+    public void encode(FriendlyByteBuf buf) {
+        buf.writeBoolean(this.value);
+    }
+
+    public boolean value() {
+        return this.value;
+    }
 }
 *///?}
