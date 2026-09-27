@@ -23,7 +23,11 @@ public class ItemFramesPlusForgeClient {
     public static void onLoggedIn(ClientPlayerNetworkEvent.LoggingIn event) {
         ItemFramesPlusConfig.Options options = ItemFramesPlusConfig.getOptions();
         if (options != null) {
-            Platform.INSTANCE.sendPreferenceToServer(options.getInvisibleItemFrames());
+            try {
+                Platform.INSTANCE.sendPreferenceToServer(options.getInvisibleItemFrames());
+            } catch (Exception e) {
+                ItemFramesPlus.LOGGER.warn("Failed to send preference to server on login", e);
+            }
         }
     }
 
