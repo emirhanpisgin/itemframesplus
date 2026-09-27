@@ -7,7 +7,7 @@ A Minecraft mod that makes item frames more useful by shrinking hitboxes and mak
 - **Invisible item frames**: Toggle item frame visibility with a client-side command
 - **Shrunk hitboxes**: Item frames have smaller collision boxes for easier placement
 - **Per-player preferences**: Each player can independently toggle visibility
-- **Cross-version support**: Works on Minecraft 1.16.5 through 26.2
+- **Cross-version support**: Works on Minecraft 1.16.5 through 26.3
 
 ## Commands
 
@@ -40,9 +40,9 @@ Requires JDK 8+ (Java version varies by target MC version, configured automatica
 
 | Minecraft | Node            | Range           |
 |-----------|-----------------|-----------------|
-| 1.16.5    | 1.16.5-fabric   | >=1.16.5        |
-| 1.19      | 1.19-fabric     | >=1.19          |
-| 1.20.5    | 1.20.5-fabric   | >=1.20.5        |
+| 1.16.5    | 1.16.5-fabric   | >=1.16.5 <1.19  |
+| 1.19      | 1.19-fabric     | >=1.19 <1.20.5  |
+| 1.20.5    | 1.20.5-fabric   | >=1.20.5 <1.21  |
 | 1.21      | 1.21-fabric     | >=1.21 <1.21.4  |
 | 1.21.4    | 1.21.4-fabric   | >=1.21.4 <1.21.9|
 | 1.21.11   | 1.21.9-fabric   | >=1.21.9 <26.1  |

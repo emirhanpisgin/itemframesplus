@@ -2,7 +2,7 @@
 mod.id = "itemframesplus"
 mod.name = "ItemFrames+"
 mod.group = "com.kryp"
-mod.version = "1.0.0"
+mod.version = "1.2.0"
 
 deps.fabric_loader = "0.19.3"
 loomx.loom_version = "1.17-SNAPSHOT"
@@ -10,25 +10,68 @@ loomx.loom_version = "1.17-SNAPSHOT"
 ["1.16.5"]
 
 [fabric."1.16.5"]
-mod.mc_compat = ">=1.16.5"
+mod.mc_compat = ">=1.16.5 <1.19"
 deps.fabric_api = "0.42.0+1.16"
 deps.fabric_command_api = "fabric-command-api-v1"
+pack_format = 6
+
+[forge."1.16.5"]
+mod.mc_compat = "=1.16.5"
+deps.forge_loader = "36.2.39"
+deps.forge_fml = "36"
 pack_format = 6
 
 ["1.19"]
 
 [fabric."1.19"]
-mod.mc_compat = ">=1.19"
+mod.mc_compat = ">=1.19 <1.20.5"
 deps.fabric_api = "0.58.0+1.19"
 deps.fabric_command_api = "fabric-command-api-v2"
 pack_format = 9
 
+["1.19.4"]
+
+[forge."1.19.4"]
+mod.mc_compat = ">=1.17 <1.20"
+deps.forge_loader = "45.4.3"
+deps.forge_fml = "45"
+pack_format = 13
+session_jdk = "21"
+
+["1.20.1"]
+
+[forge."1.20.1"]
+mod.mc_compat = ">=1.20 <1.20.5"
+deps.forge_loader = "47.4.10"
+deps.forge_fml = "47"
+pack_format = 15
+session_jdk = "21"
+
 ["1.20.5"]
 
 [fabric."1.20.5"]
-mod.mc_compat = ">=1.20.5"
+mod.mc_compat = ">=1.20.5 <1.21"
 deps.fabric_api = "0.97.8+1.20.5"
 deps.fabric_command_api = "fabric-command-api-v2"
+pack_format = 32
+
+["1.20.6"]
+
+[forge."1.20.6"]
+mod.mc_compat = ">=1.20.5 <1.21"
+deps.forge_loader = "50.2.10"
+deps.forge_fml = "50"
+pack_format = 32
+session_jdk = "21"
+
+[neoforge."1.20.4"]
+mod.mc_compat = ">=1.20.2 <1.20.5"
+deps.neo_loader = "20.4.167"
+pack_format = 32
+
+[neoforge."1.20.6"]
+mod.mc_compat = ">=1.20.5 <1.21"
+deps.neo_loader = "20.6.139"
 pack_format = 32
 
 ["1.21"]
@@ -39,12 +82,38 @@ deps.fabric_api = "0.100.8+1.21"
 deps.fabric_command_api = "fabric-command-api-v2"
 pack_format = 34
 
+["1.21.1"]
+
+[forge."1.21.1"]
+mod.mc_compat = ">=1.21 <1.21.4"
+deps.forge_loader = "52.1.0"
+deps.forge_fml = "52"
+pack_format = 34
+session_jdk = "21"
+
+[neoforge."1.21.1"]
+mod.mc_compat = ">=1.21 <1.21.4"
+deps.neo_loader = "21.1.247"
+pack_format = 34
+
 ["1.21.4"]
 
 [fabric."1.21.4"]
 mod.mc_compat = ">=1.21.4 <1.21.9"
 deps.fabric_api = "0.110.5+1.21.4"
 deps.fabric_command_api = "fabric-command-api-v2"
+pack_format = 46
+
+[forge."1.21.4"]
+mod.mc_compat = ">=1.21.4 <1.21.9"
+deps.forge_loader = "54.1.14"
+deps.forge_fml = "54"
+pack_format = 46
+session_jdk = "21"
+
+[neoforge."1.21.4"]
+mod.mc_compat = ">=1.21.4 <1.21.9"
+deps.neo_loader = "21.4.157"
 pack_format = 46
 
 ["1.21.9"]
@@ -55,6 +124,18 @@ deps.fabric_api = "0.141.6+1.21.11"
 deps.fabric_command_api = "fabric-command-api-v2"
 pack_format = 69
 
+[forge."1.21.9"]
+mod.mc_compat = ">=1.21.9 <26.1"
+deps.forge_loader = "61.2.0"
+deps.forge_fml = "61"
+pack_format = 69
+session_jdk = "21"
+
+[neoforge."1.21.9"]
+mod.mc_compat = ">=1.21.9 <26.1"
+deps.neo_loader = "21.11.45"
+pack_format = 69
+
 ["26.1"]
 
 [fabric."26.1"]
@@ -63,10 +144,32 @@ deps.fabric_api = "0.145.1+26.1"
 deps.fabric_command_api = "fabric-command-api-v2"
 pack_format = 84
 
+[forge."26.1"]
+mod.mc_compat = ">=26.1 <26.2"
+deps.forge_loader = "64.1.0"
+deps.forge_fml = "64"
+pack_format = 84
+
+[neoforge."26.1.2"]
+mod.mc_compat = ">=26.1 <26.2"
+deps.neo_loader = "26.1.2.97"
+pack_format = 84
+
 ["26.2"]
 
 [fabric."26.2"]
 mod.mc_compat = ">=26.2"
 deps.fabric_api = "0.156.0+26.2"
 deps.fabric_command_api = "fabric-command-api-v2"
+pack_format = 88
+
+[forge."26.2"]
+mod.mc_compat = ">=26.2"
+deps.forge_loader = "65.1.0"
+deps.forge_fml = "65"
+pack_format = 88
+
+[neoforge."26.2"]
+mod.mc_compat = ">=26.2"
+deps.neo_loader = "26.2.0.67"
 pack_format = 88

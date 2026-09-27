@@ -20,13 +20,18 @@ import java.nio.file.Path;
 public class Platform {
     public static final Platform INSTANCE = new Platform();
 
-    public void sendPreferenceToServer(boolean value) {
+    public void sendPreferenceToServer(Boolean value) {
+        if (value == null) return;
         //? if >=1.20.5 {
-        ClientPlayNetworking.send(new InvisibleItemFramesPacket(value));
+        if (ClientPlayNetworking.canSend(InvisibleItemFramesPacket.PACKET_ID)) {
+            ClientPlayNetworking.send(new InvisibleItemFramesPacket(value));
+        }
         //?} else {
-        /*FriendlyByteBuf buf = PacketByteBufs.create();
-        buf.writeBoolean(value);
-        ClientPlayNetworking.send(InvisibleItemFramesPacket.PACKET_ID, buf);
+        /*if (ClientPlayNetworking.canSend(InvisibleItemFramesPacket.PACKET_ID)) {
+            FriendlyByteBuf buf = PacketByteBufs.create();
+            buf.writeBoolean(value);
+            ClientPlayNetworking.send(InvisibleItemFramesPacket.PACKET_ID, buf);
+        }
         *///?}
     }
 

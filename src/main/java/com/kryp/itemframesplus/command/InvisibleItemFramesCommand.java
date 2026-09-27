@@ -29,7 +29,7 @@ public class InvisibleItemFramesCommand {
         Boolean currentValue = ItemFramesPlusConfig.getOptions().getInvisibleItemFrames();
         Boolean requestedValue = context.getArgument("boolean", Boolean.class);
 
-        if (currentValue.equals(requestedValue)) {
+        if (java.util.Objects.equals(currentValue, requestedValue)) {
             context.getSource().sendFeedback(
                 //? if >=1.19 {
                 Component.translatable("command.itemframesplus.invisibleItemFrames.alreadySet", currentValue)

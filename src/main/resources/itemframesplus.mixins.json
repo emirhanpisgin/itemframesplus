@@ -4,13 +4,12 @@
   "package": "com.kryp.itemframesplus.mixin",
   "compatibilityLevel": "JAVA_8",
   "refmap": "itemframesplus-refmap.json",
-  "mixins": [],
+  "mixins": [
+    "ItemFrameEntityMixin"
+  ],
   "client": [
     "ItemFrameEntityMixinClient",
-    "ItemFrameEntityRendererMixin"
-  ],
-  "server": [
-    "ItemFrameEntityMixin"
+    "ItemFrameEntityVisibilityMixin"
   ],
   "injectors": {
     "defaultRequire": 1
