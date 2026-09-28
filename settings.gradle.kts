@@ -53,6 +53,8 @@ stonecutter {
         match("1.18", "forge")
         match("1.19", "forge")
         match("1.20.2", "forge")
+        match("1.21", "forge")
+        match("1.21.3", "forge")
         match("1.21.6", "forge")
         match("1.21.11", "forge")
         match("26.1", "forge")
