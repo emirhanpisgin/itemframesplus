@@ -45,12 +45,26 @@ deps.forge_loader = "48.1.0"
 deps.forge_fml = "48"
 pack_format = 18
 
+["1.20.4"]
+
+[neoforge."1.20.4"]
+mod.mc_compat = ">=1.20.4 <1.20.5"
+deps.neo_loader = "20.4.251"
+pack_format = 22
+
 ["1.20.5"]
 
 [fabric."1.20.5"]
 mod.mc_compat = ">=1.20.5 <1.21"
 deps.fabric_api = "0.97.8+1.20.5"
 deps.fabric_command_api = "fabric-command-api-v2"
+pack_format = 32
+
+["1.20.6"]
+
+[neoforge."1.20.6"]
+mod.mc_compat = ">=1.20.6 <1.21"
+deps.neo_loader = "20.6.141"
 pack_format = 32
 
 ["1.21"]
@@ -65,6 +79,18 @@ pack_format = 34
 mod.mc_compat = ">=1.21 <1.21.3"
 deps.forge_loader = "51.0.3"
 deps.forge_fml = "51"
+pack_format = 34
+
+[neoforge."1.21"]
+mod.mc_compat = ">=1.21 <1.21.2"
+deps.neo_loader = "21.0.167"
+pack_format = 34
+
+["1.21.2"]
+
+[neoforge."1.21.2"]
+mod.mc_compat = ">=1.21.2 <1.21.6"
+deps.neo_loader = "21.2.1-beta"
 pack_format = 34
 
 ["1.21.3"]
@@ -91,6 +117,11 @@ deps.forge_loader = "56.0.9"
 deps.forge_fml = "56"
 pack_format = 34
 
+[neoforge."1.21.6"]
+mod.mc_compat = ">=1.21.6 <1.21.11"
+deps.neo_loader = "21.6.20-beta"
+pack_format = 34
+
 ["1.21.9"]
 
 [fabric."1.21.9"]
@@ -107,6 +138,11 @@ deps.forge_loader = "61.2.0"
 deps.forge_fml = "61"
 pack_format = 34
 
+[neoforge."1.21.11"]
+mod.mc_compat = ">=1.21.11 <26.1"
+deps.neo_loader = "21.11.45"
+pack_format = 34
+
 ["26.1"]
 
 [fabric."26.1"]
@@ -119,6 +155,11 @@ pack_format = 84
 mod.mc_compat = ">=26.1"
 deps.forge_loader = "62.0.9"
 deps.forge_fml = "62"
+pack_format = 34
+
+[neoforge."26.1"]
+mod.mc_compat = ">=26.1"
+deps.neo_loader = "26.1.0.19-beta"
 pack_format = 34
 
 ["26.2"]

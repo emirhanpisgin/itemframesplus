@@ -14,3 +14,6 @@ type = "required"
 versionRange = "${minecraft}"
 ordering = "NONE"
 side = "BOTH"
+
+[[mixins]]
+config = "itemframesplus.mixins.json"

@@ -21,12 +21,17 @@ import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 *///?}
 
+//? if neoforge && <1.20.5 {
+/*import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+*///?}
+
 //? if >=26.1 {
 /*public record InvisibleItemFramesPacket(Boolean bool) implements CustomPacketPayload {
     public static final CustomPacketPayload.Type<InvisibleItemFramesPacket> PACKET_ID = new CustomPacketPayload.Type<>(Identifier.fromNamespaceAndPath(ItemFramesPlus.MOD_ID, "invisible-item-frames"));
     public static final StreamCodec<RegistryFriendlyByteBuf, InvisibleItemFramesPacket> PACKET_CODEC = StreamCodec.composite(ByteBufCodecs.BOOL, InvisibleItemFramesPacket::bool, InvisibleItemFramesPacket::new);
     @Override
     public Type<? extends CustomPacketPayload> type() { return PACKET_ID; }
+    public boolean value() { return bool; }
 }
 *///?} else if >=1.21.11 {
 /*public class InvisibleItemFramesPacket implements CustomPacketPayload {
@@ -118,7 +123,37 @@ public class InvisibleItemFramesPacket implements CustomPacketPayload {
         return value;
     }
 }
-//?} else {
+//?} else if neoforge {
+/*public class InvisibleItemFramesPacket implements CustomPacketPayload {
+    public static final ResourceLocation PACKET_ID =
+        new ResourceLocation(ItemFramesPlus.MOD_ID, "invisible-item-frames");
+    public static final CustomPacketPayload.Type<InvisibleItemFramesPacket> TYPE =
+        new CustomPacketPayload.Type<>(PACKET_ID);
+
+    private final boolean value;
+
+    public InvisibleItemFramesPacket(boolean value) {
+        this.value = value;
+    }
+
+    public static InvisibleItemFramesPacket decode(FriendlyByteBuf buf) {
+        return new InvisibleItemFramesPacket(buf.readBoolean());
+    }
+
+    public void encode(FriendlyByteBuf buf) {
+        buf.writeBoolean(value);
+    }
+
+    @Override
+    public Type<InvisibleItemFramesPacket> type() {
+        return TYPE;
+    }
+
+    public boolean value() {
+        return value;
+    }
+}
+*///?} else {
 /*public class InvisibleItemFramesPacket {
     public static final ResourceLocation PACKET_ID =
         new ResourceLocation(ItemFramesPlus.MOD_ID, "invisible-item-frames");

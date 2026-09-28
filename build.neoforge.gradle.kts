@@ -2,7 +2,7 @@ import org.gradle.api.tasks.compile.JavaCompile
 
 plugins {
     id("java")
-    id("net.neoforged.moddev") version "2.0.143"
+    id("net.neoforged.moddev") version "2.0.147"
     id("neoforge-mutex")
 }
 
@@ -12,10 +12,10 @@ base.archivesName = "${property("mod.id") as String}-neoforge"
 // Same rationale as the Forge script: fail fast when the session JDK doesn't
 // match what this node expects. ModDevGradle manages its own compile/recompile
 // JVMs via toolchains, so most NeoForge nodes need no constraint at all.
-val expectedJdk = sc.properties["session_jdk"]
+val expectedJdk: String? = try { sc.properties["session_jdk"] } catch (_: Exception) { null }
 if (expectedJdk != null) {
     val current = JavaVersion.current().majorVersion.toInt()
-    val required = (expectedJdk as String).toInt()
+    val required = expectedJdk.toInt()
     if (current != required) {
         throw GradleException(
             "Project ':${project.name}' must be built on Java $required, but this Gradle daemon runs Java $current.\n" +
@@ -29,10 +29,10 @@ neoForge {
     version = property("deps.neo_loader") as String
 
     runs {
-        client {
+        create("client") {
             client()
         }
-        server {
+        create("server") {
             server()
         }
     }

@@ -17,6 +17,9 @@ import net.fabricmc.loader.api.FabricLoader;
 //? if forge {
 /*import net.minecraftforge.fml.loading.FMLPaths;
 *///?}
+//? if neoforge {
+/*import net.neoforged.fml.loading.FMLPaths;
+*///?}
 //? if forge && <1.20.2 {
 /*import net.minecraftforge.network.NetworkDirection;
 import net.minecraftforge.network.NetworkEvent;
@@ -97,6 +100,11 @@ public class Platform {
         *///?}
         //? if forge {
         /*        }
+        *///?}
+        //? if neoforge {
+        /*if (net.minecraft.client.Minecraft.getInstance().getConnection() != null) {
+            net.neoforged.neoforge.network.PacketDistributor.sendToServer(new InvisibleItemFramesPacket(value));
+        }
         *///?}
     }
 
@@ -196,6 +204,9 @@ public class Platform {
         return FabricLoader.getInstance().getConfigDir();
         //?}
         //? if forge {
+        /*return FMLPaths.CONFIGDIR.get();
+        *///?}
+        //? if neoforge {
         /*return FMLPaths.CONFIGDIR.get();
         *///?}
     }
