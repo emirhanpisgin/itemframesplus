@@ -121,8 +121,8 @@ foreach ($t in $targets) {
 
     $name = "ItemFrames+ $Version for $mc ($Loader)"
 
-    if ($existing -contains $versionNumber) {
-        "SKIP $versionNumber (already exists)"
+    if (@($allVersions | Where-Object { $_.version_number -eq $versionNumber -and $_.loaders -contains $Loader }).Count -gt 0) {
+        "SKIP $versionNumber ($Loader already exists)"
         continue
     }
 
