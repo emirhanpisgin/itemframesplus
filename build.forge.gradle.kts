@@ -99,10 +99,10 @@ configurations.configureEach {
     }
 }
 
-// SecureModules 2.2.21 (pinned by Forge 52.1.0) fails to resolve some Guava inner classes
-// in dev runs on 1.21.1 (NoClassDefFoundError e.g. LinkedHashMultimap$ValueSet when a
-// player renders). 2.2.24 (used by 1.21.3) handles the same module graph correctly.
-if (sc.current.parsed >= "1.21.1" && sc.current.parsed < "1.21.2") {
+// SecureModules 2.2.21 (pinned by Forge 52.x/56.0.9) fails to resolve some Guava inner
+// classes in dev runs on 1.21.1/1.21.6 (NoClassDefFoundError e.g. LinkedHashMultimap$ValueSet,
+// Hashing$Crc32CSupplier). 2.2.24 (used by 1.21.3+) handles the same module graphs correctly.
+if (sc.current.parsed >= "1.21.1" && sc.current.parsed < "1.21.7") {
     configurations.configureEach {
         resolutionStrategy {
             force("net.minecraftforge:securemodules:2.2.24")
