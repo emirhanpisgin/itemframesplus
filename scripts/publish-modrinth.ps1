@@ -1,6 +1,8 @@
 param(
     [string]$Token = $env:MODRINTH_TOKEN,
     [string]$Version = "1.2.0",
+    [ValidateSet("fabric", "forge")]
+    [string]$Loader = "fabric",
     [string]$ArtifactsDir = "",
     [string]$Changelog = "",
     [switch]$IncludeSources,
@@ -27,7 +29,7 @@ $defaultChangelog = @"
 "@
 if (-not $Changelog) { $Changelog = $defaultChangelog }
 
-$targets = @(
+$fabricTargets = @(
     @{ Mc = "1.16.5";  Games = @("1.16.5", "1.17", "1.17.1", "1.18", "1.18.1", "1.18.2") },
     @{ Mc = "1.19";    Games = @("1.19", "1.19.1", "1.19.2", "1.19.3", "1.19.4", "1.20", "1.20.1", "1.20.2", "1.20.3", "1.20.4") },
     @{ Mc = "1.20.5";  Games = @("1.20.5", "1.20.6") },
@@ -37,6 +39,17 @@ $targets = @(
     @{ Mc = "26.1";    Games = @("26.1", "26.1.1", "26.1.2") },
     @{ Mc = "26.2";    Games = @("26.2", "26.3") }
 )
+
+$forgeTargets = @(
+    @{ Mc = "1.18";    Games = @("1.18", "1.18.1", "1.18.2") },
+    @{ Mc = "1.19";    Games = @("1.19", "1.19.1", "1.19.2", "1.19.3", "1.19.4", "1.20", "1.20.1") },
+    @{ Mc = "1.20.2";  Games = @("1.20.2", "1.20.3", "1.20.4", "1.20.6", "1.21", "1.21.1", "1.21.3", "1.21.4", "1.21.5") },
+    @{ Mc = "1.21.6";  Games = @("1.21.6", "1.21.7", "1.21.8", "1.21.9", "1.21.10") },
+    @{ Mc = "1.21.11"; Games = @("1.21.11") },
+    @{ Mc = "26.1";    Games = @("26.1", "26.1.1", "26.1.2", "26.2", "26.3") }
+)
+
+$targets = if ($Loader -eq "forge") { $forgeTargets } else { $fabricTargets }
 
 $headers = @{ "User-Agent" = "itemframesplus-publish/$Version (Kryp/itemframesplus)" }
 if ($Token) { $headers["Authorization"] = $Token }
@@ -89,9 +102,9 @@ if ($ReplaceOldVersions) {
 
 foreach ($t in $targets) {
     $mc = $t.Mc
-    $jarName = "itemframesplus-fabric-$Version+$mc.jar"
+    $jarName = "itemframesplus-$Loader-$Version+$mc.jar"
     $jarPath = Join-Path $ArtifactsDir $jarName
-    $srcName = "itemframesplus-fabric-$Version+$mc-sources.jar"
+    $srcName = "itemframesplus-$Loader-$Version+$mc-sources.jar"
     $srcPath = Join-Path $ArtifactsDir $srcName
     $versionNumber = "$Version+$mc"
 
@@ -99,10 +112,14 @@ foreach ($t in $targets) {
     $jarBytes = [System.IO.File]::ReadAllBytes($jarPath)
     $sha1 = [System.BitConverter]::ToString([System.Security.Cryptography.SHA1]::HashData($jarBytes)).Replace("-", "").ToLower()
 
-    $fapiVersions = @(Get-Json "/project/$fabricApiProjectId/version?game_versions=%5B%22$mc%22%5D&loaders=%5B%22fabric%22%5D")
-    if ($fapiVersions.Count -eq 0) { throw "No Fabric API version on Modrinth for $mc" }
+    $deps = @()
+    if ($Loader -eq "fabric") {
+        $fapiVersions = @(Get-Json "/project/$fabricApiProjectId/version?game_versions=%5B%22$mc%22%5D&loaders=%5B%22fabric%22%5D")
+        if ($fapiVersions.Count -eq 0) { throw "No Fabric API version on Modrinth for $mc" }
+        $deps = @(@{ project_id = $fabricApiProjectId; dependency_type = "required" })
+    }
 
-    $name = "ItemFrames+ $Version for $mc"
+    $name = "ItemFrames+ $Version for $mc ($Loader)"
 
     if ($existing -contains $versionNumber) {
         "SKIP $versionNumber (already exists)"
@@ -113,10 +130,10 @@ foreach ($t in $targets) {
         name             = $name
         version_number   = $versionNumber
         changelog        = $Changelog
-        dependencies     = @(@{ project_id = $fabricApiProjectId; dependency_type = "required" })
+        dependencies     = $deps
         game_versions    = $t.Games
         version_type     = "release"
-        loaders          = @("fabric")
+        loaders          = @($Loader)
         featured         = $false
         status           = "listed"
         requested_status = "listed"
@@ -134,7 +151,7 @@ foreach ($t in $targets) {
     $dataJson = $data | ConvertTo-Json -Depth 6
 
     if ($DryRun) {
-        "[DRY-RUN] would publish $versionNumber ($jarName, sha1=$sha1) games=[$($t.Games -join ',')] deps=[Fabric API required]"
+        "[DRY-RUN] would publish $versionNumber ($jarName, sha1=$sha1) games=[$($t.Games -join ',')] loaders=[$Loader] deps=$($deps.Count)"
         continue
     }
 
