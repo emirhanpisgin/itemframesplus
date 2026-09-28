@@ -5,8 +5,15 @@ package com.kryp.itemframesplus;
 import com.kryp.itemframesplus.util.ItemFramesPlusPlayerPreferences;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+*///?}
+//? if forge && <1.21.6 {
+/*import net.minecraftforge.eventbus.api.SubscribeEvent;
+*///?}
+//? if forge && >=1.21.6 {
+/*import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
+*///?}
+//? if forge {
+/*import net.minecraftforge.fml.common.Mod;
 *///?}
 
 //? if forge {

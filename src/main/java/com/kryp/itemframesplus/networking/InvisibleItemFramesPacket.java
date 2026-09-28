@@ -1,7 +1,7 @@
 package com.kryp.itemframesplus.networking;
 
 import com.kryp.itemframesplus.ItemFramesPlus;
-//? if >=1.21.9 {
+//? if >=1.21.11 {
 /*import net.minecraft.resources.Identifier;
 *///?} else {
 import net.minecraft.resources.ResourceLocation;
@@ -28,7 +28,7 @@ import net.minecraft.network.codec.StreamCodec;
     @Override
     public Type<? extends CustomPacketPayload> type() { return PACKET_ID; }
 }
-*///?} else if >=1.21.9 {
+*///?} else if >=1.21.11 {
 /*public class InvisibleItemFramesPacket implements CustomPacketPayload {
     public static final Type<InvisibleItemFramesPacket> PACKET_ID =
         new Type<>(Identifier.fromNamespaceAndPath(ItemFramesPlus.MOD_ID, "invisible-item-frames"));

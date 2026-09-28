@@ -3,8 +3,15 @@ package com.kryp.itemframesplus;
 //? if forge {
 /*import com.kryp.itemframesplus.util.ItemFramesPlusClientRegistries;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+*///?}
+//? if forge && <1.21.6 {
+/*import net.minecraftforge.eventbus.api.SubscribeEvent;
+*///?}
+//? if forge && >=1.21.6 {
+/*import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
+*///?}
+//? if forge {
+/*import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 *///?}
 

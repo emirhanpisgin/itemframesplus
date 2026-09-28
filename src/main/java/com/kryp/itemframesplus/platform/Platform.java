@@ -8,9 +8,14 @@ import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.loader.api.FabricLoader;
 //?}
-//? if forge {
+//? if forge && <1.21.11 {
 /*import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.fml.loading.FMLPaths;
+*///?}
+//? if forge && >=1.21.11 {
+/*import net.minecraft.resources.Identifier;
+*///?}
+//? if forge {
+/*import net.minecraftforge.fml.loading.FMLPaths;
 *///?}
 //? if forge && <1.20.2 {
 /*import net.minecraftforge.network.NetworkDirection;
@@ -52,8 +57,15 @@ public class Platform {
     *///?}
     //? if forge && >=1.20.2 {
     /*private static final SimpleChannel CHANNEL = ChannelBuilder
-        .named(new ResourceLocation(ItemFramesPlus.MOD_ID, "main"))
-        .clientAcceptedVersions((status, version) -> true)
+    *///?}
+    //? if forge && >=1.20.2 && <1.21.11 {
+    /*        .named(ResourceLocation.tryBuild(ItemFramesPlus.MOD_ID, "main"))
+    *///?}
+    //? if forge && >=1.21.11 {
+    /*        .named(Identifier.tryBuild(ItemFramesPlus.MOD_ID, "main"))
+    *///?}
+    //? if forge && >=1.20.2 {
+    /*        .clientAcceptedVersions((status, version) -> true)
         .serverAcceptedVersions((status, version) -> true)
         .networkProtocolVersion(Integer.parseInt(PROTOCOL_VERSION))
         .simpleChannel();
@@ -142,7 +154,7 @@ public class Platform {
                 java.util.Optional.of(NetworkDirection.PLAY_TO_SERVER));
         }
         *///?}
-        //? if forge && >=1.20.2 {
+        //? if forge && >=1.20.2 && <26.1 {
         /*if (!channelRegistered) {
             channelRegistered = true;
             CHANNEL.messageBuilder(InvisibleItemFramesPacket.class, 0, NetworkDirection.PLAY_TO_SERVER)
@@ -153,6 +165,23 @@ public class Platform {
                         net.minecraft.server.level.ServerPlayer player = context.getSender();
                         if (player != null) {
                             ItemFramesPlusPlayerPreferences.addPlayer(player.getUUID(), message.value());
+                        }
+                    });
+                    context.setPacketHandled(true);
+                })
+                .add();
+        }
+        *///?}
+        //? if forge && >=26.1 {
+        /*if (!channelRegistered) {
+            channelRegistered = true;
+            CHANNEL.messageBuilder(InvisibleItemFramesPacket.class, 0, NetworkDirection.PLAY_TO_SERVER)
+                .codec(InvisibleItemFramesPacket.PACKET_CODEC)
+                .consumerMainThread((message, context) -> {
+                    context.enqueueWork(() -> {
+                        net.minecraft.server.level.ServerPlayer player = context.getSender();
+                        if (player != null) {
+                            ItemFramesPlusPlayerPreferences.addPlayer(player.getUUID(), message.bool());
                         }
                     });
                     context.setPacketHandled(true);

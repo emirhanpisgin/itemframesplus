@@ -12,8 +12,15 @@ import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
 //? if >=1.19.4 {
 import net.minecraftforge.client.event.RegisterClientCommandsEvent;
 //?}
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+*///?}
+//? if forge && <1.21.6 {
+/*import net.minecraftforge.eventbus.api.SubscribeEvent;
+*///?}
+//? if forge && >=1.21.6 {
+/*import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
+*///?}
+//? if forge {
+/*import net.minecraftforge.fml.common.Mod;
 *///?}
 
 //? if forge {
