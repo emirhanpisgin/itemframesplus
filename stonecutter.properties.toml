@@ -73,7 +73,7 @@ pack_format = 34
 mod.mc_compat = ">=1.21.3 <1.21.6"
 deps.forge_loader = "53.1.12"
 deps.forge_fml = "53"
-pack_format = 42
+pack_format = 34
 
 ["1.21.4"]
 
@@ -89,7 +89,7 @@ pack_format = 46
 mod.mc_compat = ">=1.21.6 <1.21.11"
 deps.forge_loader = "56.0.9"
 deps.forge_fml = "56"
-pack_format = 61
+pack_format = 34
 
 ["1.21.9"]
 
@@ -105,7 +105,7 @@ pack_format = 69
 mod.mc_compat = ">=1.21.11 <26.1"
 deps.forge_loader = "61.2.0"
 deps.forge_fml = "61"
-pack_format = 69
+pack_format = 34
 
 ["26.1"]
 
@@ -119,7 +119,7 @@ pack_format = 84
 mod.mc_compat = ">=26.1"
 deps.forge_loader = "62.0.9"
 deps.forge_fml = "62"
-pack_format = 84
+pack_format = 34
 
 ["26.2"]
 
@@ -127,62 +127,4 @@ pack_format = 84
 mod.mc_compat = ">=26.2"
 deps.fabric_api = "0.156.0+26.2"
 deps.fabric_command_api = "fabric-command-api-v2"
-pack_format = 88
-
-# Temporary test nodes for human testing; removed once verified.
-
-["1.18.2"]
-
-[forge."1.18.2"]
-mod.mc_compat = "=1.18.2"
-deps.forge_loader = "40.3.12"
-deps.forge_fml = "40"
-pack_format = 8
-
-["1.20.1"]
-
-[forge."1.20.1"]
-mod.mc_compat = "=1.20.1"
-deps.forge_loader = "47.3.0"
-deps.forge_fml = "47"
-pack_format = 15
-
-["1.20.6"]
-
-[forge."1.20.6"]
-mod.mc_compat = "=1.20.6"
-deps.forge_loader = "50.2.10"
-deps.forge_fml = "50"
-pack_format = 32
-
-["1.21.1"]
-
-[forge."1.21.1"]
-mod.mc_compat = "=1.21.1"
-deps.forge_loader = "52.1.0"
-deps.forge_fml = "52"
-pack_format = 34
-
-["1.21.5"]
-
-[forge."1.21.5"]
-mod.mc_compat = "=1.21.5"
-deps.forge_loader = "55.1.14"
-deps.forge_fml = "55"
-pack_format = 55
-
-["1.21.10"]
-
-[forge."1.21.10"]
-mod.mc_compat = "=1.21.10"
-deps.forge_loader = "60.1.15"
-deps.forge_fml = "60"
-pack_format = 68
-
-["26.3"]
-
-[forge."26.3"]
-mod.mc_compat = "=26.3"
-deps.forge_loader = "66.0.5"
-deps.forge_fml = "66"
 pack_format = 88
