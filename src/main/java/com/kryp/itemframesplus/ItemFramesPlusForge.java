@@ -21,8 +21,15 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 public class ItemFramesPlusForge {
     public ItemFramesPlusForge() {
         Platform.INSTANCE.registerReceiver();
-        MinecraftForge.EVENT_BUS.register(this);
-        ItemFramesPlus.LOGGER.info("Initializing Item Frames+!");
+*///?}
+//? if forge && <1.21.6 {
+/*        MinecraftForge.EVENT_BUS.register(this);
+*///?}
+//? if forge && >=1.21.6 {
+/*        PlayerEvent.PlayerLoggedOutEvent.BUS.addListener(this::onPlayerLoggedOut);
+*///?}
+//? if forge {
+/*        ItemFramesPlus.LOGGER.info("Initializing Item Frames+!");
     }
 
     @SubscribeEvent
