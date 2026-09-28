@@ -3,7 +3,7 @@ import org.gradle.jvm.toolchain.JavaLanguageVersion
 
 plugins {
     id("java")
-    id("net.minecraftforge.gradle") version "7.0.34"
+    id("net.minecraftforge.gradle") version "7.0.40"
     id("forge-mutex")
 }
 
@@ -65,6 +65,16 @@ minecraft {
             // Forge < 1.17 ships LWJGL 3.2.2 with internal class hierarchy changes that fail
             // bytecode verification. JDK 8 supports -noverify natively.
             if (sc.current.parsed < "1.17") jvmArgs("-noverify")
+            // FG7's slime launcher does not register the dev mod for FML 48/49.0.x
+            // (1.20.2/1.20.3): mixins apply, but the mod container never loads and
+            // its classes stay invisible to transformed game code. FML 48 reads the
+            // legacy MOD_CLASSES env var for this, so provide it manually.
+            if (sc.current.parsed >= "1.20.2" && sc.current.parsed < "1.20.4") {
+                val modId = property("mod.id") as String
+                val classesDir = layout.buildDirectory.dir("classes/java/main").get().asFile.absolutePath
+                val resourcesDir = layout.buildDirectory.dir("resources/main").get().asFile.absolutePath
+                environment("MOD_CLASSES", "$modId%%$classesDir;$modId%%$resourcesDir")
+            }
         }
 
         register("client")

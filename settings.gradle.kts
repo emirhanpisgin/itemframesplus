@@ -59,6 +59,15 @@ stonecutter {
         match("1.21.11", "forge")
         match("26.1", "forge")
 
+        // Temporary test nodes for human testing; removed once verified.
+        match("1.18.2", "forge")
+        match("1.20.1", "forge")
+        match("1.20.6", "forge")
+        match("1.21.1", "forge")
+        match("1.21.5", "forge")
+        match("1.21.10", "forge")
+        match("26.3", "forge")
+
         vcsVersion = "1.16.5-fabric"
     }
 }
