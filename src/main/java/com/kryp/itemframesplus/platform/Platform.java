@@ -101,9 +101,19 @@ public class Platform {
         //? if forge {
         /*        }
         *///?}
-        //? if neoforge {
+        //? if neoforge && <1.20.5 {
+        /*if (net.minecraft.client.Minecraft.getInstance().getConnection() != null) {
+            net.neoforged.neoforge.network.PacketDistributor.SERVER.noArg().send(new InvisibleItemFramesPacket(value));
+        }
+        *///?}
+        //? if neoforge && >=1.20.5 && <1.21.7 {
         /*if (net.minecraft.client.Minecraft.getInstance().getConnection() != null) {
             net.neoforged.neoforge.network.PacketDistributor.sendToServer(new InvisibleItemFramesPacket(value));
+        }
+        *///?}
+        //? if neoforge && >=1.21.7 {
+        /*if (net.minecraft.client.Minecraft.getInstance().getConnection() != null) {
+            net.neoforged.neoforge.client.network.ClientPacketDistributor.sendToServer(new InvisibleItemFramesPacket(value));
         }
         *///?}
     }

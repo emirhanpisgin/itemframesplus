@@ -127,8 +127,6 @@ public class InvisibleItemFramesPacket implements CustomPacketPayload {
 /*public class InvisibleItemFramesPacket implements CustomPacketPayload {
     public static final ResourceLocation PACKET_ID =
         new ResourceLocation(ItemFramesPlus.MOD_ID, "invisible-item-frames");
-    public static final CustomPacketPayload.Type<InvisibleItemFramesPacket> TYPE =
-        new CustomPacketPayload.Type<>(PACKET_ID);
 
     private final boolean value;
 
@@ -140,13 +138,14 @@ public class InvisibleItemFramesPacket implements CustomPacketPayload {
         return new InvisibleItemFramesPacket(buf.readBoolean());
     }
 
-    public void encode(FriendlyByteBuf buf) {
+    @Override
+    public void write(FriendlyByteBuf buf) {
         buf.writeBoolean(value);
     }
 
     @Override
-    public Type<InvisibleItemFramesPacket> type() {
-        return TYPE;
+    public ResourceLocation id() {
+        return PACKET_ID;
     }
 
     public boolean value() {

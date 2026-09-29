@@ -64,6 +64,7 @@ stonecutter {
         match("1.21", "neoforge")
         match("1.21.2", "neoforge")
         match("1.21.6", "neoforge")
+        match("1.21.7", "neoforge")
         match("1.21.11", "neoforge")
         match("26.1", "neoforge")
 

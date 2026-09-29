@@ -9,13 +9,24 @@ import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.Component;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
+*///?}
+//? if neoforge && <1.20.5 {
+/*import net.neoforged.fml.common.Mod;
+*///?}
+//? if neoforge && >=1.20.5 {
+/*import net.neoforged.fml.common.EventBusSubscriber;
+*///?}
+//? if neoforge {
+/*import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
 import net.neoforged.neoforge.client.event.RegisterClientCommandsEvent;
 *///?}
 
-//? if neoforge && <1.21.6 {
-/*@EventBusSubscriber(modid = ItemFramesPlus.MOD_ID, value = Dist.CLIENT, bus = EventBusSubscriber.Bus.FORGE)
+//? if neoforge && <1.20.5 {
+/*@Mod.EventBusSubscriber(modid = ItemFramesPlus.MOD_ID, value = Dist.CLIENT)
+public class ItemFramesPlusNeoForgeClient {
+*///?}
+//? if neoforge && >=1.20.5 && <1.21.6 {
+/*@EventBusSubscriber(modid = ItemFramesPlus.MOD_ID, value = Dist.CLIENT, bus = EventBusSubscriber.Bus.GAME)
 public class ItemFramesPlusNeoForgeClient {
 *///?}
 //? if neoforge && >=1.21.6 {

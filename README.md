@@ -7,7 +7,7 @@ A Minecraft mod that makes item frames more useful by shrinking hitboxes and mak
 - **Invisible item frames**: Toggle item frame visibility with a client-side command
 - **Shrunk hitboxes**: Item frames have smaller collision boxes for easier placement
 - **Per-player preferences**: Each player can independently toggle visibility
-- **Cross-version support**: Works on Minecraft 1.16.5 through 26.3 (Fabric and Forge)
+- **Cross-version support**: Works on Minecraft 1.16.5 through 26.3 (Fabric, Forge, and NeoForge)
 
 ## Commands
 
@@ -29,6 +29,12 @@ Toggle whether item frames appear invisible to you.
 **Forge**
 
 1. Install [Forge](https://files.minecraftforge.net/) for your Minecraft version
+2. Download the latest release from [Modrinth](https://modrinth.com/mod/itemframesplus)
+3. Place the mod jar in your `mods` folder
+
+**NeoForge**
+
+1. Install [NeoForge](https://neoforged.net/) for your Minecraft version
 2. Download the latest release from [Modrinth](https://modrinth.com/mod/itemframesplus)
 3. Place the mod jar in your `mods` folder
 
@@ -73,6 +79,21 @@ Each node builds one jar that covers a range of Minecraft versions.
 | 1.21.6    | 1.21.6-forge  | >=1.21.6 <1.21.11  | 56.0.9        |
 | 1.21.11   | 1.21.11-forge | >=1.21.11 <26.1    | 61.2.0        |
 | 26.1      | 26.1-forge    | >=26.1             | 62.0.9        |
+
+### NeoForge
+
+Coverage starts at 1.20.4; Minecraft 1.20.5 is not supported (no NeoForge build with the ModDevGradle module metadata).
+
+| Minecraft | Node            | Range              | NeoForge version |
+|-----------|-----------------|--------------------|------------------|
+| 1.20.4    | 1.20.4-neoforge | >=1.20.4 <1.20.5   | 20.4.251         |
+| 1.20.6    | 1.20.6-neoforge | >=1.20.6 <1.21     | 20.6.141         |
+| 1.21      | 1.21-neoforge   | >=1.21 <1.21.2     | 21.0.167         |
+| 1.21.2    | 1.21.2-neoforge | >=1.21.2 <1.21.6   | 21.2.1-beta      |
+| 1.21.6    | 1.21.6-neoforge | >=1.21.6 <1.21.7   | 21.6.20-beta     |
+| 1.21.7    | 1.21.7-neoforge | >=1.21.7 <1.21.11  | 21.7.25-beta     |
+| 1.21.11   | 1.21.11-neoforge| >=1.21.11 <26.1    | 21.11.45         |
+| 26.1      | 26.1-neoforge   | >=26.1             | 26.1.0.19-beta   |
 
 ## License
 

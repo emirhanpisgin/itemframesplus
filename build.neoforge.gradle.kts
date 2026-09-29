@@ -28,6 +28,12 @@ neoForge {
     // The full NeoForge artifact version, e.g. "21.1.247".
     version = property("deps.neo_loader") as String
 
+    mods {
+        register("itemframesplus") {
+            sourceSet(sourceSets.main.get())
+        }
+    }
+
     runs {
         create("client") {
             client()
@@ -62,7 +68,14 @@ tasks {
             register("pack_format", "pack_format")
         }
 
-        filesMatching("META-INF/neoforge.mods.toml") { expand(props) }
+        // NeoForge 20.4 (FML 2.x) still reads META-INF/mods.toml; the rename to
+        // neoforge.mods.toml happened with NeoForge 20.5 (FML 3.x).
+        val legacyModsToml = sc.current.parsed < "1.20.5"
+        inputs.property("legacyModsToml", legacyModsToml)
+        filesMatching("META-INF/neoforge.mods.toml") {
+            expand(props)
+            if (legacyModsToml) name = "mods.toml"
+        }
         filesMatching("pack.mcmeta") { expand(props) }
 
         exclude("fabric.mod.json", "META-INF/mods.toml")

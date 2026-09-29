@@ -1,7 +1,8 @@
 package com.kryp.itemframesplus;
 
 //? if neoforge {
-/*import com.kryp.itemframesplus.util.ItemFramesPlusPlayerPreferences;
+/*import com.kryp.itemframesplus.networking.InvisibleItemFramesPacket;
+import com.kryp.itemframesplus.util.ItemFramesPlusPlayerPreferences;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
@@ -43,8 +44,7 @@ public class ItemFramesPlusNeoForge {
             InvisibleItemFramesPacket.PACKET_ID,
             InvisibleItemFramesPacket.PACKET_CODEC,
             (payload, context) -> {
-                net.minecraft.server.level.ServerPlayer player = context.player();
-                if (player != null) {
+                if (context.player() instanceof net.minecraft.server.level.ServerPlayer player) {
                     ItemFramesPlusPlayerPreferences.addPlayer(player.getUUID(), payload.value());
                 }
             });

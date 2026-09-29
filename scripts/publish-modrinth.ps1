@@ -1,7 +1,7 @@
 param(
     [string]$Token = $env:MODRINTH_TOKEN,
     [string]$Version = "1.2.0",
-    [ValidateSet("fabric", "forge")]
+    [ValidateSet("fabric", "forge", "neoforge")]
     [string]$Loader = "fabric",
     [string]$ArtifactsDir = "",
     [string]$Changelog = "",
@@ -51,7 +51,18 @@ $forgeTargets = @(
     @{ Mc = "26.1";    Games = @("26.1", "26.1.1", "26.1.2", "26.2", "26.3") }
 )
 
-$targets = if ($Loader -eq "forge") { $forgeTargets } else { $fabricTargets }
+$neoforgeTargets = @(
+    @{ Mc = "1.20.4";  Games = @("1.20.4") },
+    @{ Mc = "1.20.6";  Games = @("1.20.6") },
+    @{ Mc = "1.21";    Games = @("1.21", "1.21.1") },
+    @{ Mc = "1.21.2";  Games = @("1.21.2", "1.21.3", "1.21.4", "1.21.5") },
+    @{ Mc = "1.21.6";  Games = @("1.21.6") },
+    @{ Mc = "1.21.7";  Games = @("1.21.7", "1.21.8", "1.21.9", "1.21.10") },
+    @{ Mc = "1.21.11"; Games = @("1.21.11") },
+    @{ Mc = "26.1";    Games = @("26.1", "26.1.1", "26.1.2", "26.2", "26.3") }
+)
+
+$targets = if ($Loader -eq "forge") { $forgeTargets } elseif ($Loader -eq "neoforge") { $neoforgeTargets } else { $fabricTargets }
 
 $headers = @{ "User-Agent" = "itemframesplus-publish/$Version (Kryp/itemframesplus)" }
 if ($Token) { $headers["Authorization"] = $Token }
