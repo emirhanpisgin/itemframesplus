@@ -28,8 +28,8 @@ Toggle whether item frames appear invisible to you.
 
 **Quilt**
 
-1. Install [Quilt Loader](https://quiltmc.org/) for Minecraft 1.19 or 1.21
-2. Download the Fabric release from [Modrinth](https://modrinth.com/mod/itemframesplus)
+1. Install [Quilt Loader](https://quiltmc.org/) for a supported Minecraft version (see the matrix below)
+2. Download the Quilt release from [Modrinth](https://modrinth.com/mod/itemframesplus)
 3. Place the mod jar in your `mods` folder
 4. Requires [Quilted Fabric API](https://modrinth.com/mod/qsl)
 
@@ -74,7 +74,7 @@ Requires JDK 8+ (Java version varies by target MC version, configured automatica
 
 ### Quilt
 
-The Fabric builds for **1.19** and **1.21** also run on Quilt Loader with [Quilted Fabric API](https://modrinth.com/mod/qsl). No other versions are supported, because QFAPI has no releases for them.
+The Fabric builds also run on Quilt Loader with [Quilted Fabric API](https://modrinth.com/mod/qsl) on every Minecraft version QFAPI ships for: **1.18.2, 1.19–1.19.4, 1.20–1.20.2, 1.20.4, 1.20.6, and 1.21**. Other versions (including 1.20.3, 1.20.5 and 1.21.1+) are not supported on Quilt, because QFAPI has no releases for them.
 
 ### Forge
 

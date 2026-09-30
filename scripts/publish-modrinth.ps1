@@ -1,13 +1,13 @@
 param(
     [string]$Token = $env:MODRINTH_TOKEN,
     [string]$Version = "1.2.0",
-    [ValidateSet("fabric", "forge", "neoforge")]
+    [ValidateSet("fabric", "forge", "neoforge", "quilt")]
     [string]$Loader = "fabric",
     [string]$ArtifactsDir = "",
     [string]$Changelog = "",
     [switch]$IncludeSources,
     [switch]$ReplaceOldVersions,
-    [switch]$AddQuiltLoaders,
+    [switch]$PublishQuilt,
     [switch]$DryRun
 )
 
@@ -15,6 +15,7 @@ $ErrorActionPreference = "Stop"
 $api = "https://api.modrinth.com/v2"
 $projectSlug = "itemframesplus"
 $fabricApiProjectId = "P7dR8mSH"
+$qfapiProjectId = "qvIfYCYJ"
 
 if (-not $ArtifactsDir) {
     $ArtifactsDir = Join-Path (Split-Path $PSScriptRoot -Parent) "build\libs\$Version"
@@ -63,11 +64,17 @@ $neoforgeTargets = @(
     @{ Mc = "26.1";    Games = @("26.1", "26.1.1", "26.1.2", "26.2", "26.3") }
 )
 
-$targets = if ($Loader -eq "forge") { $forgeTargets } elseif ($Loader -eq "neoforge") { $neoforgeTargets } else { $fabricTargets }
+# Fabric jars verified to run on Quilt Loader with Quilted Fabric API (QFAPI).
+# game_versions are limited to the Minecraft versions QFAPI actually ships for.
+$quiltTargets = @(
+    @{ Mc = "1.16.5"; Games = @("1.18.2"); ArtifactLoader = "fabric" },
+    @{ Mc = "1.19";   Games = @("1.19", "1.19.1", "1.19.2", "1.19.3", "1.19.4", "1.20", "1.20.1", "1.20.2", "1.20.4"); ArtifactLoader = "fabric" },
+    @{ Mc = "1.20.5"; Games = @("1.20.6"); ArtifactLoader = "fabric" },
+    @{ Mc = "1.21";   Games = @("1.21"); ArtifactLoader = "fabric" }
+)
 
-# Fabric versions that also run on Quilt Loader (needs Quilted Fabric API, which
-# only exists for these Minecraft versions).
-$quiltSupportedMc = @("1.19", "1.21")
+if ($PublishQuilt) { $Loader = "quilt" }
+$targets = if ($PublishQuilt) { $quiltTargets } elseif ($Loader -eq "forge") { $forgeTargets } elseif ($Loader -eq "neoforge") { $neoforgeTargets } else { $fabricTargets }
 
 $headers = @{ "User-Agent" = "itemframesplus-publish/$Version (Kryp/itemframesplus)" }
 if ($Token) { $headers["Authorization"] = $Token }
@@ -100,32 +107,6 @@ if (-not $Token) {
 $allVersions = @(Get-Json "/project/$projectSlug/version")
 $existing = $allVersions.version_number
 
-if ($AddQuiltLoaders) {
-    "== Adding Quilt loader tag to supported Fabric versions =="
-    foreach ($mc in $quiltSupportedMc) {
-        $vn = "$Version+$mc"
-        $hits = @($allVersions | Where-Object { $_.version_number -eq $vn -and $_.loaders -contains "fabric" })
-        if ($hits.Count -eq 0) { Write-Warning "No Fabric version found for $vn"; continue }
-        foreach ($v in $hits) {
-            if ($v.loaders -contains "quilt") { "SKIP $vn (quilt already present)"; continue }
-            $newLoaders = @($v.loaders + "quilt" | Select-Object -Unique)
-            if ($DryRun) {
-                "[DRY-RUN] would PATCH $vn ($($v.id)) loaders=[$($newLoaders -join ',')]"
-                continue
-            }
-            try {
-                # Modrinth moved version edits to the v3 route.
-                $body = @{ loaders = $newLoaders } | ConvertTo-Json
-                Invoke-WebRequest "https://api.modrinth.com/v3/version/$($v.id)" -Method Patch -Headers $headers -ContentType "application/json" -Body $body -UseBasicParsing | Out-Null
-                "PATCHED $vn ($($v.id)) loaders=[$($newLoaders -join ',')]"
-            } catch {
-                Write-Warning "Failed to patch $vn : $_"
-            }
-        }
-    }
-    return
-}
-
 if ($ReplaceOldVersions) {
     $old = @($allVersions | Where-Object { $_.version_number -eq $Version })
     if ($old.Count -eq 0) { "No plain '$Version' versions to replace." }
@@ -146,9 +127,10 @@ if ($ReplaceOldVersions) {
 
 foreach ($t in $targets) {
     $mc = $t.Mc
-    $jarName = "itemframesplus-$Loader-$Version+$mc.jar"
+    $artifactLoader = if ($t.ContainsKey("ArtifactLoader")) { $t.ArtifactLoader } else { $Loader }
+    $jarName = "itemframesplus-$artifactLoader-$Version+$mc.jar"
     $jarPath = Join-Path $ArtifactsDir $jarName
-    $srcName = "itemframesplus-$Loader-$Version+$mc-sources.jar"
+    $srcName = "itemframesplus-$artifactLoader-$Version+$mc-sources.jar"
     $srcPath = Join-Path $ArtifactsDir $srcName
     $versionNumber = "$Version+$mc"
 
@@ -161,6 +143,8 @@ foreach ($t in $targets) {
         $fapiVersions = @(Get-Json "/project/$fabricApiProjectId/version?game_versions=%5B%22$mc%22%5D&loaders=%5B%22fabric%22%5D")
         if ($fapiVersions.Count -eq 0) { throw "No Fabric API version on Modrinth for $mc" }
         $deps = @(@{ project_id = $fabricApiProjectId; dependency_type = "required" })
+    } elseif ($Loader -eq "quilt") {
+        $deps = @(@{ project_id = $qfapiProjectId; dependency_type = "required" })
     }
 
     $name = "ItemFrames+ $Version for $mc ($Loader)"
