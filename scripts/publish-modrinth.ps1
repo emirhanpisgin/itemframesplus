@@ -64,7 +64,7 @@ $neoforgeTargets = @(
 
 $targets = if ($Loader -eq "forge") { $forgeTargets } elseif ($Loader -eq "neoforge") { $neoforgeTargets } else { $fabricTargets }
 
-$headers = @{ "User-Agent" = "itemframesplus-publish/$Version (Kryp/itemframesplus)" }
+$headers = @{ "User-Agent" = "itemframesplus-publish/$Version (emirhanpisgin/itemframesplus)" }
 if ($Token) { $headers["Authorization"] = $Token }
 
 function Get-Json([string]$path, [bool]$auth = $false) {
@@ -170,7 +170,7 @@ foreach ($t in $targets) {
 
     try {
         $client = [System.Net.Http.HttpClient]::new()
-        $client.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", "itemframesplus-publish/$Version (Kryp/itemframesplus)") | Out-Null
+        $client.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", "itemframesplus-publish/$Version (emirhanpisgin/itemframesplus)") | Out-Null
         $client.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", $Token) | Out-Null
 
         $form = [System.Net.Http.MultipartFormDataContent]::new()
