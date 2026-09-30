@@ -7,6 +7,7 @@ param(
     [string]$Changelog = "",
     [switch]$IncludeSources,
     [switch]$ReplaceOldVersions,
+    [switch]$AddQuiltLoaders,
     [switch]$DryRun
 )
 
@@ -64,6 +65,10 @@ $neoforgeTargets = @(
 
 $targets = if ($Loader -eq "forge") { $forgeTargets } elseif ($Loader -eq "neoforge") { $neoforgeTargets } else { $fabricTargets }
 
+# Fabric versions that also run on Quilt Loader (needs Quilted Fabric API, which
+# only exists for these Minecraft versions).
+$quiltSupportedMc = @("1.19", "1.21")
+
 $headers = @{ "User-Agent" = "itemframesplus-publish/$Version (Kryp/itemframesplus)" }
 if ($Token) { $headers["Authorization"] = $Token }
 
@@ -94,6 +99,32 @@ if (-not $Token) {
 
 $allVersions = @(Get-Json "/project/$projectSlug/version")
 $existing = $allVersions.version_number
+
+if ($AddQuiltLoaders) {
+    "== Adding Quilt loader tag to supported Fabric versions =="
+    foreach ($mc in $quiltSupportedMc) {
+        $vn = "$Version+$mc"
+        $hits = @($allVersions | Where-Object { $_.version_number -eq $vn -and $_.loaders -contains "fabric" })
+        if ($hits.Count -eq 0) { Write-Warning "No Fabric version found for $vn"; continue }
+        foreach ($v in $hits) {
+            if ($v.loaders -contains "quilt") { "SKIP $vn (quilt already present)"; continue }
+            $newLoaders = @($v.loaders + "quilt" | Select-Object -Unique)
+            if ($DryRun) {
+                "[DRY-RUN] would PATCH $vn ($($v.id)) loaders=[$($newLoaders -join ',')]"
+                continue
+            }
+            try {
+                # Modrinth moved version edits to the v3 route.
+                $body = @{ loaders = $newLoaders } | ConvertTo-Json
+                Invoke-WebRequest "https://api.modrinth.com/v3/version/$($v.id)" -Method Patch -Headers $headers -ContentType "application/json" -Body $body -UseBasicParsing | Out-Null
+                "PATCHED $vn ($($v.id)) loaders=[$($newLoaders -join ',')]"
+            } catch {
+                Write-Warning "Failed to patch $vn : $_"
+            }
+        }
+    }
+    return
+}
 
 if ($ReplaceOldVersions) {
     $old = @($allVersions | Where-Object { $_.version_number -eq $Version })

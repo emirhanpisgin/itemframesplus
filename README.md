@@ -7,7 +7,7 @@ A Minecraft mod that makes item frames more useful by shrinking hitboxes and mak
 - **Invisible item frames**: Toggle item frame visibility with a client-side command
 - **Shrunk hitboxes**: Item frames have smaller collision boxes for easier placement
 - **Per-player preferences**: Each player can independently toggle visibility
-- **Cross-version support**: Works on Minecraft 1.16.5 through 26.3 (Fabric, Forge, and NeoForge)
+- **Cross-version support**: Works on Minecraft 1.16.5 through 26.3 (Fabric, Quilt, Forge, and NeoForge)
 
 ## Commands
 
@@ -25,6 +25,13 @@ Toggle whether item frames appear invisible to you.
 2. Download the latest release from [Modrinth](https://modrinth.com/mod/itemframesplus)
 3. Place the mod jar in your `mods` folder
 4. Requires [Fabric API](https://modrinth.com/mod/fabric-api)
+
+**Quilt**
+
+1. Install [Quilt Loader](https://quiltmc.org/) for Minecraft 1.19 or 1.21
+2. Download the Fabric release from [Modrinth](https://modrinth.com/mod/itemframesplus)
+3. Place the mod jar in your `mods` folder
+4. Requires [Quilted Fabric API](https://modrinth.com/mod/qsl)
 
 **Forge**
 
@@ -64,6 +71,10 @@ Requires JDK 8+ (Java version varies by target MC version, configured automatica
 | 1.21.11   | 1.21.9-fabric   | >=1.21.9 <26.1  |
 | 26.1      | 26.1-fabric     | >=26.1 <26.2    |
 | 26.2      | 26.2-fabric     | >=26.2          |
+
+### Quilt
+
+The Fabric builds for **1.19** and **1.21** also run on Quilt Loader with [Quilted Fabric API](https://modrinth.com/mod/qsl). No other versions are supported, because QFAPI has no releases for them.
 
 ### Forge
 
